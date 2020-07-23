@@ -1,5 +1,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const os = require('os');
+const HappyPack = require('happypack');
+const happThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
     entry:  './src/main.jsx',
@@ -9,6 +12,14 @@ module.exports = {
             template: 'index.html',
             filename: 'index.html'
         }),
+        //加快构建速度
+        new HappyPack({
+            id: 'happyBabel',
+            loaders: ['babel-loader?cacheDirectory=true'],
+            threadPool: happThreadPool,
+            //允许 HappyPack 输出日志
+            verbose: true
+        })
     ],
     output: {
         filename: 'js/[name].[hash:8].js',
