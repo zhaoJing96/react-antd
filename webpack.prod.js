@@ -12,8 +12,7 @@ module.exports = merge(common, {
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].[chunkhash:8].css',
-           // chunkFilename: 'css/[name]-[id].[chunkhash:8].css',
+            filename: 'static/style/[name].[chunkhash:8].css',
         }),
     ],
     optimization: {
@@ -29,17 +28,7 @@ module.exports = merge(common, {
                 }
             }),
             new OptimizeCSSAssetsPlugin({})
-        ],
-        // splitChunks:{
-        //     minChunks: 2,
-        //     cacheGroups: {
-        //         vendor: {
-        //             name: 'vendor',
-        //             chunks: 'initial',
-        //             test: /[\\/]node_modules[\\/]/
-        //         }
-        //     }
-        // }
+        ]
     },
     module: {
         rules: [

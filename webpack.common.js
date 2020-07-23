@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
-        app: './src/main.js',
+        main: './src/main.jsx',
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -17,23 +17,43 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     resolve: {
-        extensions: ['.js','.jsx', '.css', '.less']
+        extensions: ['.js', '.jsx', '.css', '.scss', '.less'],
+        alias: {
+            '@': path.resolve(__dirname, './src')
+        }
     },
     module: {
-        rules: [
+        rules: [{
+                test: /\.(js|jsx)$/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env', 'react', 'stage-0'],
+                        plugins: ['transform-decorators-legacy', 'transform-decorators']
+                    }
+                },
+                include: path.resolve(__dirname, './src'),
+                exclude: path.resolve(__dirname, 'node_modules')
+            },
             {
                 test: /\.(js|jsx)$/,
-                use: 'babel-loader',
-                exclude: path.resolve(__dirname, 'node_modules'),
-                include:path.resolve(__dirname, 'src')
+                loader: 'happypack/loader?id=happyBabel',
+                include: path.resolve(__dirname, './src'),
+                exclude: path.resolve(__dirname, 'node_modules')
             },
+            // {
+            //     test: /\.(js|jsx)$/,
+            //     use: 'babel-loader',
+            //     exclude: path.resolve(__dirname, 'node_modules'),
+            //     include: path.resolve(__dirname, './src')
+            // },
             {
                 test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 include: /fonts?/,
                 options: {
                     limit: 1024,
-                    name: 'fonts/[name].[hash:7].[ext]'
+                    name: '/static/fonts/[name].[hash:7].[ext]'
                 }
             },
             {
@@ -41,8 +61,8 @@ module.exports = {
                 loader: 'url-loader',
                 exclude: /fonts?/,
                 options: {
-                    limit: 4096,                                
-                    name: 'images/[name].[hash:7].[ext]'                        
+                    limit: 4096,
+                    name: '/static/images/[name].[hash:7].[ext]'
                 }
             },
             {
@@ -50,7 +70,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 4096,
-                    name: 'media/[name].[hash:7].[ext]'
+                    name: '/static/media/[name].[hash:7].[ext]'
                 }
             },
         ]
