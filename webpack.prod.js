@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const path = require('path')
 
 module.exports = merge(common, {
     mode: 'production',
@@ -12,7 +11,7 @@ module.exports = merge(common, {
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'static/style/[name].[chunkhash:8].css',
+            filename: '/static/style/[name].[chunkhash:8].css',
         }),
     ],
     optimization: {

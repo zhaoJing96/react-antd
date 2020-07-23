@@ -2,12 +2,10 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: {
-        main: './src/main.jsx',
-    },
+    entry:  './src/main.jsx',
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'webpack 4 production',
+            title: 'react antd',
             template: 'index.html',
             filename: 'index.html'
         }),
@@ -33,20 +31,14 @@ module.exports = {
                     }
                 },
                 include: path.resolve(__dirname, './src'),
-                exclude: path.resolve(__dirname, 'node_modules')
+                exclude: /node_modules/
             },
             {
                 test: /\.(js|jsx)$/,
                 loader: 'happypack/loader?id=happyBabel',
                 include: path.resolve(__dirname, './src'),
-                exclude: path.resolve(__dirname, 'node_modules')
+                exclude: /node_modules/
             },
-            // {
-            //     test: /\.(js|jsx)$/,
-            //     use: 'babel-loader',
-            //     exclude: path.resolve(__dirname, 'node_modules'),
-            //     include: path.resolve(__dirname, './src')
-            // },
             {
                 test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
                 loader: 'url-loader',
