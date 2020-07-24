@@ -1,12 +1,7 @@
 const path = require('path'); // 引入文件路径
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin'); //使用 extract-text-webpack-plugin就可以把css从js中独立抽离出来
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin'); //根据模板生成html
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const {
-    CleanWebpackPlugin
-} = require('clean-webpack-plugin'); //每次打包之前，删除上一次打包生成的文件
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'); //压缩CSS模块;
 
 module.exports = {
     // 入口文件
@@ -22,54 +17,35 @@ module.exports = {
         rules: [{
                 //正则匹配后缀.css文件;
                 test: /\.css$/,
-                //添加对样式表的处理。css-loader使你能够使用类似@import 和 url(...)的方法实现 require()的功能,style-loader将所有的计算后的样式加入页面中，二者组合在一起使你能够把样式表嵌入webpack打包后的JS文件中
-                use: ExtractTextPlugin.extract({
-                    use: ExtractTextPlugin.extract({
-                        use: [{
-                                loader: 'style-loader',
-                            }, {
-                                loader: 'css-loader?importLoaders=1',
-                                options: {
-                                    modules: false,
-                                }
-                            },
-                            {
-                                loader: 'postcss-loader'
-                            }
-                        ]
-                    })
-                })
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: false,
+                        }
+                    }
+                ]
             },
             {
                 //正则匹配后缀.less文件;
                 test: /\.less$/,
-                //使用html-webpack-plugin插件独立css到一个文件;
-                use: ExtractTextPlugin.extract({
-                    use: [{
-                            loader: 'css-loader?importLoaders=1',
-                            options: {
-                                modules: {
-                                  localIdentName: '[path][name]__[local]--[hash:base64:5]',
-                                }
-                              }
-                        },
-                        {
-                            loader: 'postcss-loader', //配置参数;
-                            options: {
-                                plugins: function () {
-                                    return [
-                                        require('autoprefixer')
-                                        ({
-                                            browsers: ['ios >= 7.0']
-                                        })
-                                    ];
-                                }
-                            }
-                        },
-                        //加载less-loader同时也得安装less;
-                        "less-loader"
-                    ]
-                })
+                use: [{
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            javascriptEnabled: true,
+                        }
+                    }
+                ]
             },
             {
                 //正则匹配后缀.png、.jpg、.gif图片文件;
@@ -106,44 +82,17 @@ module.exports = {
     },
     // 插件
     plugins: [
-        new CleanWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(), // 模块热替换插件
-        new ExtractTextPlugin({
-            filename: '[name].css'
+        //处理.css文件
+        new MiniCssExtractPlugin({
+            filename: [name].css
         }),
         new HtmlWebpackPlugin({
             template: './src/index.html', // 生成html模板路径
             filename: 'index.html',
             inject: 'body'
         }),
-        //压缩css（注:因为没有用style-loader打包到js里所以webpack.optimize.UglifyJsPlugin的压缩本身对独立css不管用）;
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/g, //正则匹配后缀.css文件;
-            cssProcessor: require('cssnano'), //加载‘cssnano’css优化插件;
-            cssProcessorOptions: {
-                discardComments: {
-                    removeAll: true
-                }
-            }, //插件设置,删除所有注释;
-            canPrint: true //设置是否可以向控制台打日志,默认为true;
-        })
     ],
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
-                    output: {
-                        comments: false
-                    },
-                    warnings: false,
-                    compress: {
-                        drop_debugger: true,
-                        drop_console: true
-                    }
-                }
-            })
-        ]
-    },
     // 开发中
     devServer: {
         // 配置node本地服务器

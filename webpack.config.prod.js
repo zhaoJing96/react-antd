@@ -1,6 +1,5 @@
 const path = require('path'); // 引入文件路径
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin'); //使用 extract-text-webpack-plugin就可以把css从js中独立抽离出来
 const HtmlWebpackPlugin = require('html-webpack-plugin'); //根据模板生成html
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {
@@ -25,46 +24,42 @@ const config = {
         rules: [{
                 test: /\.css$/,
                 //添加对样式表的处理。css-loader使你能够使用类似@import 和 url(...)的方法实现 require()的功能,style-loader将所有的计算后的样式加入页面中，二者组合在一起使你能够把样式表嵌入webpack打包后的JS文件中
-                use: ExtractTextPlugin.extract({
-                    use: [{
-                            loader: 'style-loader',
-                        }, {
-                            loader: 'css-loader',
-                            options: {
-                                importLoaders: 1
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader'
-                        }
-                    ]
-                })
+                use: [{
+                    loader: 'style-loader',
+                }, {
+                    loader: 'css-loader',
+                    options: {
+                        importLoaders: 1
+                    }
+                },
+                {
+                    loader: 'postcss-loader'
+                }
+            ]
             },
             {
                 //正则匹配后缀.less文件;
                 test: /\.less$/,
                 //使用html-webpack-plugin插件独立css到一个文件;
-                use: ExtractTextPlugin.extract({
-                    use: [{
-                            loader: 'css-loader?importLoaders=1',
-                        },
-                        {
-                            loader: 'postcss-loader', //配置参数;
-                            options: {
-                                plugins: function () {
-                                    return [
-                                        require('autoprefixer')
-                                        ({
-                                            browsers: ['ios >= 7.0']
-                                        })
-                                    ];
-                                }
-                            }
-                        },
-                        //加载less-loader同时也得安装less;
-                        "less-loader"
-                    ]
-                })
+                use: [{
+                    loader: 'css-loader?importLoaders=1',
+                },
+                {
+                    loader: 'postcss-loader', //配置参数;
+                    options: {
+                        plugins: function () {
+                            return [
+                                require('autoprefixer')
+                                ({
+                                    browsers: ['ios >= 7.0']
+                                })
+                            ];
+                        }
+                    }
+                },
+                //加载less-loader同时也得安装less;
+                "less-loader"
+            ]
             },
             {
                 //正则匹配后缀.png、.jpg、.gif图片文件;
@@ -102,42 +97,65 @@ const config = {
     // 插件
     plugins: [
         new webpack.HotModuleReplacementPlugin(), // 模块热替换插件
-        new ExtractTextPlugin({
-            filename: "[name].css",
-        }),
         new HtmlWebpackPlugin({
             template: './src/index.html', // 生成html模板路径
             filename: 'index.html',
             inject: 'body'
         }),
-        //压缩css（注:因为没有用style-loader打包到js里所以webpack.optimize.UglifyJsPlugin的压缩本身对独立css不管用）;
+        // 优化css
         new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/g, //正则匹配后缀.css文件;
-            cssProcessor: require('cssnano'), //加载‘cssnano’css优化插件;
+            assetNameRegExp: /\.css$/g,
             cssProcessorOptions: {
+                safe: true,
+                autoprefixer: { disable: true }, //这里注意下!!!!!
+                mergeLonghand: false,
                 discardComments: {
-                    removeAll: true
+                    removeAll: true // 移除注释
                 }
-            }, //插件设置,删除所有注释;
-            canPrint: true //设置是否可以向控制台打日志,默认为true;
+            },
+            canPrint: true
         }),
         new CleanWebpackPlugin()
     ],
     optimization: {
         minimizer: [
             new UglifyJsPlugin({
+                cache: true,
+                parallel: true, // 开启并行压缩，充分利用cpu
+                sourceMap: false,
+                extractComments: true, // 移除注释
                 uglifyOptions: {
-                    output: {
-                        comments: false
-                    },
                     warnings: false,
                     compress: {
+                        unused: true,
                         drop_debugger: true,
-                        drop_console: true
+                        drop_console: true,//console
+                        pure_funcs: ['console.log']//移除console
+                    },
+                    output: {
+                        comments: false
                     }
                 }
             })
-        ]
+        ],
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                common: {
+                    // test: /[\\/]src[\\/]/,把src目录下的公共JS代码提出为common.js
+                    name: "common",
+                    minChunks: 2,
+                    maxInitialRequests: 5,
+                    minSize: 0
+                },
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendor",
+                    priority: 10, //设置处理的优先级，数值越大越优先处理
+                    enforce: true
+                }
+            }
+        },
     },
     // 开发中
     devServer: {

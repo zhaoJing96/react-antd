@@ -1,10 +1,8 @@
 const path = require('path'); // 引入文件路径
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin'); //使用 extract-text-webpack-plugin就可以把css从js中独立抽离出来
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'); //压缩CSS模块;
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 var OpenBrowserPlugin = require('open-browser-webpack-plugin'); //浏览器自行打开浏览器
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: 'development',
@@ -22,46 +20,36 @@ module.exports = {
         rules: [{
                 test: /\.css$/,
                 //添加对样式表的处理。css-loader使你能够使用类似@import 和 url(...)的方法实现 require()的功能,style-loader将所有的计算后的样式加入页面中，二者组合在一起使你能够把样式表嵌入webpack打包后的JS文件中
-                use: ExtractTextPlugin.extract({
-                    use: [{
-                            loader: 'style-loader',
-                        }, {
-                            loader: 'css-loader',
-                            options: {
-                                importLoaders: 1
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader'
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: false,
                         }
-                    ]
-                })
+                    }
+                ]
             },
             {
                 //正则匹配后缀.less文件;
                 test: /\.less$/,
                 //使用html-webpack-plugin插件独立css到一个文件;
-                use: ExtractTextPlugin.extract({
-                    use: [{
-                            loader: 'css-loader?importLoaders=1',
-                        },
-                        {
-                            loader: 'postcss-loader', //配置参数;
-                            options: {
-                                plugins: function () {
-                                    return [
-                                        require('autoprefixer')
-                                        ({
-                                            browsers: ['ios >= 7.0']
-                                        })
-                                    ];
-                                }
-                            }
-                        },
-                        //加载less-loader同时也得安装less;
-                        "less-loader"
-                    ]
-                })
+                use: [{
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            javascriptEnabled: true,
+                        }
+                    }
+                ]
             },
             {
                 //正则匹配后缀.png、.jpg、.gif图片文件;
@@ -99,41 +87,13 @@ module.exports = {
     // 插件
     plugins: [
         new webpack.HotModuleReplacementPlugin(), // 模块热替换插件
-        new ExtractTextPlugin({
-            filename: "[name].css",
-        }),
-        //压缩css（注:因为没有用style-loader打包到js里所以webpack.optimize.UglifyJsPlugin的压缩本身对独立css不管用）;
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/g, //正则匹配后缀.css文件;
-            cssProcessor: require('cssnano'), //加载‘cssnano’css优化插件;
-            cssProcessorOptions: {
-                discardComments: {
-                    removeAll: true
-                }
-            }, //插件设置,删除所有注释;
-            canPrint: true //设置是否可以向控制台打日志,默认为true;
-        }),
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
-        new OpenBrowserPlugin({ url: 'http://localhost:8081' }) // 浏览器自动运行
+        new OpenBrowserPlugin({
+            url: 'http://localhost:8081'
+        }) // 浏览器自动运行
     ],
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
-                    output: {
-                        comments: false
-                    },
-                    warnings: false,
-                    compress: {
-                        drop_debugger: true,
-                        drop_console: true
-                    }
-                }
-            })
-        ]
-    },
     // 开发中
     devServer: {
         // 配置node本地服务器
