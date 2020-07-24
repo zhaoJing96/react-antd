@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 // import { DatePicker, message } from 'antd';
  
 // 引入css
-// import '../src/main.css';
+import css from '../src/css/main.css';
 
 class App extends React.Component {
   constructor(props) {

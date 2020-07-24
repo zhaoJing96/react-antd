@@ -56,7 +56,7 @@ module.exports = {
                             //小于10000K的图片文件转base64到css里,当然css文件体积更大;
                             limit: 10000,
                             //设置最终img路径;
-                            name: '/image/[name].[ext]'
+                            name: '/src/img/[name].[ext]'
                         }
                     },
                     {
@@ -102,11 +102,10 @@ module.exports = {
     resolve: {
         //设置可省略文件后缀名(注:如果有文件没有后缀设置‘’会在编译时会报错,必须改成' '中间加个空格。ps:虽然看起来很强大但有时候省略后缀真不知道加载是啥啊~);
         extensions: [' ', '.css', '.scss', '.sass', '.less', '.js', '.jsx', '.json'],
-        //查找module的话从这里开始查找;
-        modules: [path.resolve(__dirname, "src"), "node_modules"], //绝对路径;
+        
         //别名设置,主要是为了配和webpack.ProvidePlugin设置全局插件;
         alias: {
-            //设置全局jquery插件;
+            '@': path.resolve(__dirname, './src')
         }
     }
 }
