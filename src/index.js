@@ -1,8 +1,8 @@
 // 主页面
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.less';
-import App from './App';
+import '../src/static/style/index.less';
+import App from './view/App';
 
 ReactDOM.render(
   <App />,

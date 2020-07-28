@@ -206,7 +206,7 @@ module.exports = function (webpackEnv) {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
-        ...(modules.webpackAliases || {}),
+        ...(modules.webpackAliases || {})
       },
       plugins: [
         PnpWebpackPlugin,
@@ -220,8 +220,7 @@ module.exports = function (webpackEnv) {
     },
     module: {
       strictExportPresence: true,
-      rules: [
-        {
+      rules: [{
           parser: {
             requireEnsure: false
           }
@@ -241,8 +240,7 @@ module.exports = function (webpackEnv) {
           include: paths.appSrc,
         },
         {
-          oneOf: [
-            {
+          oneOf: [{
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
               loader: require.resolve('url-loader'),
               options: {
