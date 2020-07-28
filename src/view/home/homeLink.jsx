@@ -6,7 +6,7 @@ export default function HomeLink() {
     return <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
         <Menu.Item key="1">
             <Link to="/home/onePage" replace>
-                <span>nav 1</span>
+                <span>日期、分页组件</span>
             </Link>
         </Menu.Item>
         <Menu.Item key="2">
