@@ -5,7 +5,7 @@ import HomeRoute from '../home/homeRoute.jsx'
 
 function App() {
   return (
-    <Row className="ui_app_box" type='flex' justify="start">
+    <Row className="ui_app_box">
       <Col className='ui_app_link'>
           <HomeLink />
       </Col>

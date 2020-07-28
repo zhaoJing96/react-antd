@@ -10,7 +10,7 @@ export default function HomeLink() {
             </Link>
         </Menu.Item>
         <Menu.Item key="2">
-            <Link to="/home/twoPage" replace>
+            <Link to="/home/tableResize" replace>
                 <span>nav 2</span>
             </Link>
         </Menu.Item>
