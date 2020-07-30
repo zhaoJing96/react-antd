@@ -1,9 +1,14 @@
 .ui_table_resize_box {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 
     .resize_box {
-        width: 100%;
-        border: 1px solid;
+        flex: 1;
+        overflow: hidden;
+        // overflow-y: auto;
+        // border: 1px solid;
     }
 }

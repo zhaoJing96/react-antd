@@ -192,15 +192,17 @@ const TwoPage = () => {
             phone: 12345678974
         }
     ]
-    return <div className='ui_container_box ui_table_resize_box'>
-        <h1>屏幕自适应</h1>
-        <div>自适应获取屏幕变化div高度变化、自适应获取屏幕变化div高度变化、自适应获取屏幕变化div高度变化、自适应获取屏幕变化div高度变化、自适应获取屏幕变化div高度变化、自适应获取屏幕变化div高度变化</div>
-        <div id='box' className='resize_box'>
-            <Table dataSource={dataSource}
-                columns={columns}
-                pagination={false}
-                scroll={{ y: hei }}
-                rowKey='id' />
+    return <div className='ui_container_box'>
+        <div className='ui_table_resize_box'>
+            <h1>antd表格头部固定</h1>
+            <div>表格头部固定，屏幕缩放自适应，获取屏幕变化div高度变化动态改变表格高度。</div>
+            <div id='box' className='resize_box'>
+                <Table dataSource={dataSource}
+                    columns={columns}
+                    pagination={false}
+                    scroll={{ y: hei - 54 }}
+                    rowKey='id' />
+            </div>
         </div>
     </div>;
 }

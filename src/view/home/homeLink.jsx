@@ -11,7 +11,7 @@ export default function HomeLink() {
         </Menu.Item>
         <Menu.Item key="2">
             <Link to="/home/tableResize" replace>
-                <span>nav 2</span>
+                <span>表格头部固定</span>
             </Link>
         </Menu.Item>
         <Menu.Item key="3">
