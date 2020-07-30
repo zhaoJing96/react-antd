@@ -200,7 +200,8 @@ const TwoPage = () => {
                 <Table dataSource={dataSource}
                     columns={columns}
                     pagination={false}
-                    scroll={{ y: hei - 54 }}
+                    // 总高度-头部高度
+                    scroll={{ y: hei - 55 }}
                     rowKey='id' />
             </div>
         </div>
