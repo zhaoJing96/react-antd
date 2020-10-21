@@ -5,7 +5,7 @@ import { Menu } from 'antd';
 export default function HomeLink() {
     return <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
         <Menu.Item key="1">
-            <Link to="/home/onePage" replace>
+            <Link to="/home/component" replace>
                 <span>日期、分页组件</span>
             </Link>
         </Menu.Item>
@@ -15,8 +15,8 @@ export default function HomeLink() {
             </Link>
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to="/home/threePage" replace>
-                <span>nav 3</span>
+            <Link to="/home/marquee" replace>
+                <span>文字滚动</span>
             </Link>
         </Menu.Item>
         <Menu.Item key="4">
