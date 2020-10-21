@@ -4,7 +4,7 @@ import moment from 'moment';
 import DRangePicker from '../component/rangePicker/index.jsx';
 import DhPagination from '../component/pagination/index.jsx';
 
-const OnePage = () => {
+const ComponentPage = () => {
     const [date, setDate] = useState(null);
 
     // 设置默认时间昨天
@@ -44,4 +44,4 @@ const OnePage = () => {
         </Row>
     </div>;
 }
-export default OnePage;
+export default ComponentPage;

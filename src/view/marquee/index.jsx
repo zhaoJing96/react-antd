@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Marquee from '../component/marquee/index.jsx'
 
-const ThreePage = () => {
+const MarqueePage = () => {
     const [list, setList] = useState([]);
 
     useEffect(() => {
@@ -28,4 +28,4 @@ const ThreePage = () => {
         <Marquee list={list} speed={20} delay={1000} wid={400} hei={32} />
     </div>;
 }
-export default ThreePage;
+export default MarqueePage;

@@ -20,8 +20,8 @@ export default function HomeLink() {
             </Link>
         </Menu.Item>
         <Menu.Item key="4">
-            <Link to="/home/fourPage" replace>
-                <span>nav 4</span>
+            <Link to="/home/tableDrag" replace>
+                <span>表格拖拽</span>
             </Link>
         </Menu.Item>
     </Menu>;

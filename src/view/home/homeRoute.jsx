@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import ComponentPage from '../componentPage/index.jsx';
 import TableResize from '../tableResize/index.jsx';
 import Marquee from '../marquee/index.jsx';
-import FourPage from '../fourPage/index.jsx';
+import TableDrag from '../tableDrag/index.jsx';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -13,7 +13,7 @@ export default function HomeRoute() {
             <Route path="/home/component" component={ComponentPage}></Route>
             <Route path="/home/tableResize" component={TableResize}></Route>
             <Route path="/home/marquee" component={Marquee}></Route>
-            <Route path="/home/fourPage" component={FourPage}></Route>
+            <Route path="/home/tableDrag" component={TableDrag}></Route>
         </Switch>
     </Fragment>;
 }
