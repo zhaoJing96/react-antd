@@ -24,5 +24,10 @@ export default function HomeLink() {
                 <span>表格拖拽</span>
             </Link>
         </Menu.Item>
+        <Menu.Item key="5">
+            <Link to="/home/openlayerMap" replace>
+                <span>openlayer 地图</span>
+            </Link>
+        </Menu.Item>
     </Menu>;
 }

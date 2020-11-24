@@ -4,6 +4,7 @@ import ComponentPage from '../componentPage/index.jsx';
 import TableResize from '../tableResize/index.jsx';
 import Marquee from '../marquee/index.jsx';
 import TableDrag from '../tableDrag/index.jsx';
+import OpenlayerMap from '../openlayer/index.jsx';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -14,6 +15,7 @@ export default function HomeRoute() {
             <Route path="/home/tableResize" component={TableResize}></Route>
             <Route path="/home/marquee" component={Marquee}></Route>
             <Route path="/home/tableDrag" component={TableDrag}></Route>
+            <Route path="/home/openlayerMap" component={OpenlayerMap}></Route>
         </Switch>
     </Fragment>;
 }
