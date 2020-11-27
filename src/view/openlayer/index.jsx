@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Map, View } from 'ol';// 地图Collection
 // import { Map, View, Feature, Collection } from 'ol';// 地图Collection
 import * as Proj from 'ol/proj'; // 转化
-// import { amapFn } from '@/common/util/openlayers.js';
-import { amapFn } from '../../common/util/openlayers.js';
+import { amapFn } from '@/common/util/openlayers.js';
+// import { amapFn } from '../../common/util/openlayers.js';
 
 const OpenlayerMap = () => {
     const [map, setMap] = useState(null); // 地图
