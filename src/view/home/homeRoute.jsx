@@ -10,6 +10,7 @@ export default function HomeRoute() {
     return <Fragment>
         <Switch>
             {/* 默认页面 */}
+            <Route exact path="/" component={ComponentPage}></Route>
             <Route exact path="/home" component={ComponentPage}></Route>
             <Route path="/home/component" component={ComponentPage}></Route>
             <Route path="/home/tableResize" component={TableResize}></Route>
