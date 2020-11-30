@@ -25,8 +25,8 @@ export default function HomeLink() {
             </Link>
         </Menu.Item>
         <Menu.Item key="5">
-            <Link to="/home/openlayerMap" replace>
-                <span>openlayer 地图</span>
+            <Link to="/home/openlayerCluster" replace>
+                <span>openlayer cluster 聚合</span>
             </Link>
         </Menu.Item>
     </Menu>;

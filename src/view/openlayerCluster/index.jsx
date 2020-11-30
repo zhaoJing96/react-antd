@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Map, View, Feature } from 'ol';// 地图Collection
-// import { Map, View, Feature, Collection } from 'ol';// 地图Collection
 import * as Proj from 'ol/proj'; // 转化
 import { Vector as VectorSource, Cluster } from 'ol/source'; // 资源
 import VectorLayer from 'ol/layer/Vector'; // 图层
