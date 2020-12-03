@@ -121,13 +121,13 @@ module.exports = function (webpackEnv) {
     entry: [
       isEnvDevelopment &&
       require.resolve('react-dev-utils/webpackHotDevClient'),
-      paths.appIndexJs,
+      paths.appIndexJs, // 入口文件地址
     ].filter(Boolean),
     output: {
-      path: isEnvProduction ? paths.appBuild : undefined,
+      path: isEnvProduction ? paths.appBuild : undefined, // 输出路径
       pathinfo: isEnvDevelopment,
       filename: isEnvProduction ?
-        'static/js/[name].[contenthash:8].js' : isEnvDevelopment && 'static/js/bundle.js',
+        'static/js/[name].[contenthash:8].js' : isEnvDevelopment && 'static/js/bundle.js', // 打包后文件
       futureEmitAssets: true,
       chunkFilename: isEnvProduction ?
         'static/js/[name].[contenthash:8].chunk.js' : isEnvDevelopment && 'static/js/[name].chunk.js',
@@ -377,20 +377,21 @@ module.exports = function (webpackEnv) {
       new HtmlWebpackPlugin(
         Object.assign({}, {
             inject: true,
+            // HtmlWebpackPlugin插件的路径要从项目根目录开始
             template: paths.appHtml,
           },
           isEnvProduction ? {
             minify: {
-              removeComments: true,
-              collapseWhitespace: true,
-              removeRedundantAttributes: true,
-              useShortDoctype: true,
-              removeEmptyAttributes: true,
-              removeStyleLinkTypeAttributes: true,
-              keepClosingSlash: true,
-              minifyJS: true,
-              minifyCSS: true,
-              minifyURLs: true,
+              removeComments: true, // 移除HTML中的注释
+              collapseWhitespace: true, // 在显示之间不要留下任何空格:内联;崩溃时的元素。
+              removeRedundantAttributes: true, // 当值匹配默认值时删除属性。
+              useShortDoctype: true, // 用short (HTML5) doctype替换doctype。
+              removeEmptyAttributes: true, // 删除所有的属性，只有whitespace-only的值
+              removeStyleLinkTypeAttributes: true, // 从style和link标签中删除type="text/css"
+              keepClosingSlash: true, // 保留单例元素的末尾斜杠。
+              minifyJS: true, // 在脚本元素和事件属性中缩小JavaScript
+              minifyCSS: true, // 压缩内联css
+              minifyURLs: true, // 在各种属性中缩小url
             },
           } :
           undefined
@@ -406,6 +407,7 @@ module.exports = function (webpackEnv) {
       isEnvDevelopment && new CaseSensitivePathsPlugin(),
       isEnvDevelopment &&
       new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+      // 处理css文件
       isEnvProduction &&
       new MiniCssExtractPlugin({
         filename: 'static/css/[name].[contenthash:8].css',
