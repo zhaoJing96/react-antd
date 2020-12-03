@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
+const { SubMenu } = Menu;
 
 export default function HomeLink() {
     return <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
@@ -29,5 +30,17 @@ export default function HomeLink() {
                 <span>openlayer cluster 聚合</span>
             </Link>
         </Menu.Item>
+        <SubMenu
+            key="6"
+            title={<span>React hooks</span>}>
+            <Menu.Item key="child1">
+                <Link to="/home/hooks" replace>
+                    <span>useContext、useReducer</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="child2">Option 10</Menu.Item>
+            <Menu.Item key="child3">Option 11</Menu.Item>
+            <Menu.Item key="child4">Option 12</Menu.Item>
+        </SubMenu>
     </Menu>;
 }

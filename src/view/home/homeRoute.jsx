@@ -5,6 +5,7 @@ import TableResize from '../tableResize/index.jsx';
 import Marquee from '../marquee/index.jsx';
 import TableDrag from '../tableDrag/index.jsx';
 import OpenlayerCluster from '../openlayerCluster/index.jsx';
+import HooksDemo from '../hooksDemo/index.jsx';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -17,6 +18,7 @@ export default function HomeRoute() {
             <Route path="/home/marquee" component={Marquee}></Route>
             <Route path="/home/tableDrag" component={TableDrag}></Route>
             <Route path="/home/openlayerCluster" component={OpenlayerCluster}></Route>
+            <Route path="/home/hooks" component={HooksDemo}></Route>
         </Switch>
     </Fragment>;
 }
