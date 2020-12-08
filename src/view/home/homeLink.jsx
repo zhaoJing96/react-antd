@@ -42,5 +42,10 @@ export default function HomeLink() {
             <Menu.Item key="child3">Option 11</Menu.Item>
             <Menu.Item key="child4">Option 12</Menu.Item>
         </SubMenu>
+        <Menu.Item key="7">
+            <Link to="/home/gltfModel" replace>
+                <span>three.js加载3D模型</span>
+            </Link>
+        </Menu.Item>
     </Menu>;
 }

@@ -6,6 +6,7 @@ import Marquee from '../marquee/index.jsx';
 import TableDrag from '../tableDrag/index.jsx';
 import OpenlayerCluster from '../openlayerCluster/index.jsx';
 import HooksDemo from '../hooksDemo/index.jsx';
+import GltfModelPage from '../gltfModel/index.jsx';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -19,6 +20,7 @@ export default function HomeRoute() {
             <Route path="/home/tableDrag" component={TableDrag}></Route>
             <Route path="/home/openlayerCluster" component={OpenlayerCluster}></Route>
             <Route path="/home/hooks" component={HooksDemo}></Route>
+            <Route path="/home/gltfModel" component={GltfModelPage}></Route>
         </Switch>
     </Fragment>;
 }
