@@ -221,7 +221,11 @@ export default function GltfModelPage() {
         camera.lookAt(scene.position);
 
         // 创建一个webGL对象
-        renderer = new THREE.WebGLRenderer();
+        renderer = new THREE.WebGLRenderer({
+            //增加下面两个属性，可以抗锯齿
+            antialias: true,
+            alpha: true
+        });
         renderer.setSize(width, height); // 设置渲染区域尺寸
         renderer.setClearColor(0xffffff, 1); // 设置颜色透明度
         // 首先渲染器开启阴影
