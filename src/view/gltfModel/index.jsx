@@ -66,6 +66,30 @@ export default function GltfModelPage() {
         cameraObj.updateProjectionMatrix();
         rendererObj.setSize(width, height);
     }
+    // 获取与射线相交的对象数组
+    function getCanvasIntersects(event) {
+        // 声明 raycaster 和 mouse 变量
+        let rayCaster = new THREE.Raycaster();
+        let mouse = new THREE.Vector2();
+        event.preventDefault();
+        // 判断canvas画布是否是整个屏幕
+        if (box.current) {
+            // box.current画布所在的div，通过整个scene所在的容器来界定的
+            let getBoundingClientRect = box.current.getBoundingClientRect(); // 方法返回元素的大小及其相对于视口的位置
+            mouse.x = ((event.clientX - getBoundingClientRect.left) / box.current.offsetWidth) * 2 - 1;
+            mouse.y = -((event.clientY - getBoundingClientRect.top) / box.current.offsetHeight) * 2 + 1;
+        } else {
+            // 通过鼠标点击位置,计算出 raycaster 所需点的位置,以屏幕为中心点,范围 -1 到 1
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+        //通过鼠标点击的位置(二维坐标)和当前相机的矩阵计算出射线位置
+        rayCaster.setFromCamera(mouse, cameraObj);
+        // 返回射线选中的对象 第二个参数如果不填 默认是false，设置为true检测所有后代
+        let intersects = rayCaster.intersectObjects(sceneObj.children, true);
+        //返回选中的对象数组
+        return intersects;
+    }
     useEffect(() => {
         if (sceneObj) {
             // 导入GlTF模型
@@ -102,6 +126,15 @@ export default function GltfModelPage() {
         if (cameraObj && rendererObj) {
             // 监听窗体变化
             window.addEventListener('resize', onWindowResize, false);
+
+            // 监听点击事件
+            box.current.addEventListener('click', (event) => {
+                let selectObj = getCanvasIntersects(event);
+                console.log(selectObj);
+                if (selectObj.length > 0) {
+
+                }
+            });
         }
     }, [cameraObj, rendererObj]);
 
