@@ -7,6 +7,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
+import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { getCanvasIntersects } from '@/common/three'; // three自定义公共方法
 // 天空盒子环境贴图图片
 const skyZ1 = require('@/static/image/sky/Sky_DayZ1.png');
@@ -24,9 +25,7 @@ let delta = new THREE.Clock().getDelta();//getDelta()方法获得两帧的时间
 // three.js加载3D 模型glb
 export default function GltfModelPage() {
     const [modelData, setModelData] = useState(null); // 模型对象
-    const [modelColorsPosi, setModelColorsPosi] = useState(null); // 用于存储模型颜色位置
     const box = useRef(); // canvas盒子
-    console.log(modelColorsPosi);
     // 设置天空盒子背景
     function setSceneBackground() {
         // 创建一个环境、使用环境贴图
@@ -72,7 +71,6 @@ export default function GltfModelPage() {
                 }
                 // 存储模型小零件初始颜色、位置、名称
                 let modelObj = null;
-                let modelArr = [];
                 if (obj.isMesh) {
                     modelObj = {
                         name: obj.name,
@@ -81,9 +79,8 @@ export default function GltfModelPage() {
                         posiY: obj.position.y,
                         posiZ: obj.position.z
                     }
+                    obj.userData = { ...modelObj };
                 }
-                modelArr.push(modelObj);
-                setModelColorsPosi(modelArr);
             });
             setModelData(gltf.scene);
             scene.add(gltf.scene);
@@ -110,6 +107,7 @@ export default function GltfModelPage() {
     // 渲染动画
     function renderFn() {
         requestAnimationFrame(renderFn);
+        TWEEN.update(); // 补间动画执行
         if (isComposer) {
             // 组合渲染器，渲染高亮
             composer.render(delta);
@@ -149,6 +147,89 @@ export default function GltfModelPage() {
                 })
             }
         }
+    }
+    // 分解模型
+    function resolvemodel() {
+        if (modelData) {
+            let target = modelData.getObjectByName("JC6BD_JC6WR_0");
+            new TWEEN.Tween(target.position)
+                .to({
+                    x: -100,
+                }, 1000)
+                .delay(0)
+                .easing(TWEEN.Easing.Sinusoidal.InOut)//InOut表示前半段加速，后半段减速   Linear.None表示匀速
+                .onUpdate(function () {
+
+                })
+                .onComplete(function () {
+
+                })
+                .start();
+
+            let target1 = modelData.getObjectByName("JC6BD_JC6WR_1");
+            new TWEEN.Tween(target1.position)
+                .to({
+                    x: 100,
+                    z: -100
+                }, 1000)
+                .delay(1000) // 相对于上一个动画延迟时长 
+                .easing(TWEEN.Easing.Sinusoidal.InOut)//InOut表示前半段加速，后半段减速   Linear.None表示匀速
+                .onUpdate(function () {
+
+                })
+                .onComplete(function () {
+
+                })
+                .start();
+        }
+    }
+    // 合并模型
+    function resetModel() {
+        if (modelData) {
+            let target = modelData.getObjectByName("JC6BD_JC6WR_0");
+            new TWEEN.Tween(target.position)
+                .to({
+                    x: target.userData.posiX,
+                    y: target.userData.posiY,
+                    z: target.userData.posiZ,
+                }, 1000)
+                .delay(0)
+                .easing(TWEEN.Easing.Sinusoidal.InOut)//InOut表示前半段加速，后半段减速   Linear.None表示匀速
+                .onUpdate(function () {
+
+                })
+                .onComplete(function () {
+
+                })
+                .start();
+
+            let target1 = modelData.getObjectByName("JC6BD_JC6WR_1");
+            new TWEEN.Tween(target1.position)
+                .to({
+                    x: target1.userData.posiX,
+                    y: target1.userData.posiY,
+                    z: target1.userData.posiZ,
+                }, 1000)
+                .delay(1000) // 相对于上一个动画延迟时长 
+                .easing(TWEEN.Easing.Sinusoidal.InOut)//InOut表示前半段加速，后半段减速   Linear.None表示匀速
+                .onUpdate(function () {
+
+                })
+                .onComplete(function () {
+
+                })
+                .start();
+        }
+    }
+    // 重置颜色
+    function resetColor() {
+        modelData.traverse(obj => {
+            if (obj.isMesh) {
+                let newMaterial = obj.material.clone(); // 获取当前对象已有材质
+                newMaterial.color = new THREE.Color(obj.userData.color); // 重新修改颜色
+                obj.material = newMaterial;
+            }
+        });
     }
 
     // 监听窗体变化、自适应窗体事件
@@ -226,9 +307,9 @@ export default function GltfModelPage() {
                 <li color='orange'></li>
                 <li color='white'></li>
             </ul>
-            <Button>分解模型</Button>
-            <Button>合并模型</Button>
-            <Button>重置颜色</Button>
+            <Button onClick={resolvemodel}>分解模型</Button>
+            <Button onClick={resetModel}>合并模型</Button>
+            <Button onClick={resetColor}>重置颜色</Button>
             <Button>一键重置</Button>
         </div>
         <div style={{ width: '100%', height: '600px' }} ref={box}></div>
