@@ -268,7 +268,6 @@ export default function GltfModelPage() {
         box.current.appendChild(renderer.domElement);
         // 监听鼠标事件
         controls = new OrbitControls(camera, renderer.domElement);
-        // controls.addEventListener('change', renderFn);
         // controls.enableDamping = true;//设置为true则启用阻尼(惯性)，默认false
         // controls.dampingFactor = 0.05;//值越小阻尼效果越强
         // 高亮设置
