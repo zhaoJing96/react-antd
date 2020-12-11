@@ -52,7 +52,6 @@ export default function GltfModelPage() {
         let gltfLoader = new GLTFLoader();
         gltfLoader.load(modelUrl, (gltf) => {
             gltf.scene.traverse(obj => {
-                console.log(obj);
                 // 模型Mesh开启阴影
                 if (obj.isMesh) {
                     obj.castShadow = true;
