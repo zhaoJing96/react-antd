@@ -94,6 +94,8 @@ export default function GltfModelPage() {
     // 渲染动画
     function renderFn() {
         requestAnimationFrame(renderFn);
+        //控制器
+        // controls.update(delta);
         TWEEN.update(); // 补间动画执行
         if (isComposer) {
             // 组合渲染器，渲染高亮
@@ -138,9 +140,13 @@ export default function GltfModelPage() {
             }
         }
     }
-    // 分解动画
+    // 分解、合并动画
     function resolveAnimation(name, posi) {
         let target = modelData.getObjectByName(name);
+        if (target.isMesh) {
+            target.geometry.dispose();
+            target.material.dispose();
+        }
         new TWEEN.Tween(target.position)
             .to({
                 x: posi && posi.x ? posi.x : target.userData.posiX,
@@ -262,7 +268,9 @@ export default function GltfModelPage() {
         box.current.appendChild(renderer.domElement);
         // 监听鼠标事件
         controls = new OrbitControls(camera, renderer.domElement);
-        controls.addEventListener('change', renderFn);
+        // controls.addEventListener('change', renderFn);
+        // controls.enableDamping = true;//设置为true则启用阻尼(惯性)，默认false
+        // controls.dampingFactor = 0.05;//值越小阻尼效果越强
         // 高亮设置
         setComposer(width, height);
         // 渲染
