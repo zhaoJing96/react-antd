@@ -270,15 +270,18 @@ export default function GltfModelPage() {
     }, []);
 
     return <div className='ui_container_box'>
-        three.js加载3D模型
+        three.js加载3D模型，对模型部件颜色修改，对模型拆分实现爆炸效果。
         <div className='ui_model_container'>
-            <ul onClick={changeColor}>
-                <li color='red'></li>
-                <li color='blue'></li>
-                <li color='orange'></li>
-                <li color='yellow'></li>
-                <li color='white'></li>
-            </ul>
+            <div className='ui_change_hatColor'>
+                <span >改变帽壳颜色：</span>
+                <ul onClick={changeColor}>
+                    <li color='red'></li>
+                    <li color='blue'></li>
+                    <li color='orange'></li>
+                    <li color='yellow'></li>
+                    <li color='white'></li>
+                </ul>
+            </div>
             <Button onClick={resolvemodel}>分解模型</Button>
             <Button onClick={resetModel}>合并模型</Button>
             <Button onClick={resetColor}>重置颜色</Button>
