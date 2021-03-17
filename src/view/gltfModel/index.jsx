@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useState, useEffect } from 'react';
 import { Button } from 'antd';
@@ -8,7 +9,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import { getCanvasIntersects } from '@/common/three'; // three自定义公共方法
+import { getCanvasIntersects } from '@/common/three/index.js'; // three自定义公共方法
 const modelUrl = require('@/static/image/ZN_Mao.glb');
 // const modelUrl = require('@/static/image/JC6BD.glb');
 

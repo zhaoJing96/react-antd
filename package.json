@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.9.0",
-    "@craco/craco": "^5.6.4",
+    "@babel/plugin-proposal-decorators": "^7.13.5",
+    "@craco/craco": "^5.9.0",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -20,6 +21,7 @@
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "craco-less": "^1.17.1",
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
