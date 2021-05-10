@@ -11,7 +11,6 @@ const AmapPage = () => {
             // 创建Object3DLayer图层
             let object3DLayer = new AMap.Object3DLayer();
             map.add(object3DLayer);
-            console.log(map);
             // 加载AMap.GltfLoader插件
             map.plugin(["AMap.GltfLoader"], () => {
                 let gltfObj = new AMap.GltfLoader();
