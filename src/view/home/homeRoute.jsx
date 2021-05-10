@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import ComponentPage from '../componentPage/index.jsx';
-import TableResize from '../tableResize/index.jsx';
-import Marquee from '../marquee/index.jsx';
-import TableDrag from '../tableDrag/index.jsx';
-import OpenlayerCluster from '../openlayerCluster/index.jsx';
-import HooksDemo from '../hooksDemo/index.jsx';
-import GltfModelPage from '../gltfModel/index.jsx';
+import ComponentPage from '../componentPage';
+import TableResize from '../tableResize';
+import Marquee from '../marquee';
+import TableDrag from '../tableDrag';
+import OpenlayerCluster from '../openlayerCluster';
+import HooksDemo from '../hooksDemo';
+import GltfModelPage from '../gltfModel';
+import AmapPage from '../amap';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -21,6 +22,7 @@ export default function HomeRoute() {
             <Route path="/home/openlayerCluster" component={OpenlayerCluster}></Route>
             <Route path="/home/hooks" component={HooksDemo}></Route>
             <Route path="/home/gltfModel" component={GltfModelPage}></Route>
+            <Route path="/home/amap" component={AmapPage}></Route>
         </Switch>
     </Fragment>;
 }

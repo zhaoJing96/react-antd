@@ -47,5 +47,10 @@ export default function HomeLink() {
                 <span>three.js加载3D模型</span>
             </Link>
         </Menu.Item>
+        <Menu.Item key="8">
+            <Link to="/home/amap" replace>
+                <span>高德地图贴图模型</span>
+            </Link>
+        </Menu.Item>
     </Menu>;
 }
