@@ -52,5 +52,10 @@ export default function HomeLink() {
                 <span>高德地图贴图模型</span>
             </Link>
         </Menu.Item>
+        <Menu.Item key="9">
+            <Link to="/home/flvVideo" replace>
+                <span>视频流</span>
+            </Link>
+        </Menu.Item>
     </Menu>;
 }

@@ -8,6 +8,7 @@ import OpenlayerCluster from '../openlayerCluster';
 import HooksDemo from '../hooksDemo';
 import GltfModelPage from '../gltfModel';
 import AmapPage from '../amap';
+import FlvVideo from '../flvVideo';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -23,6 +24,7 @@ export default function HomeRoute() {
             <Route path="/home/hooks" component={HooksDemo}></Route>
             <Route path="/home/gltfModel" component={GltfModelPage}></Route>
             <Route path="/home/amap" component={AmapPage}></Route>
+            <Route path="/home/flvVideo" component={FlvVideo}></Route>
         </Switch>
     </Fragment>;
 }
