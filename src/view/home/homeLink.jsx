@@ -54,7 +54,12 @@ export default function HomeLink() {
         </Menu.Item>
         <Menu.Item key="9">
             <Link to="/home/flvVideo" replace>
-                <span>视频流</span>
+                <span>flvjs视频流</span>
+            </Link>
+        </Menu.Item>
+        <Menu.Item key="10">
+            <Link to="/home/videoPlayer" replace>
+                <span>videojs视频流</span>
             </Link>
         </Menu.Item>
     </Menu>;
