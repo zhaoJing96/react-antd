@@ -10,6 +10,7 @@ import GltfModelPage from '../gltfModel';
 import AmapPage from '../amap';
 import FlvVideo from '../flvVideo';
 import VideoPlayer from '../videoPlayer';
+import JessibucaPlayer from '../jessibucaPlayer';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -27,6 +28,7 @@ export default function HomeRoute() {
             <Route path="/home/amap" component={AmapPage}></Route>
             <Route path="/home/flvVideo" component={FlvVideo}></Route>
             <Route path="/home/videoPlayer" component={VideoPlayer}></Route>
+            <Route path="/home/jessibucaPlayer" component={JessibucaPlayer}></Route>
         </Switch>
     </Fragment>;
 }

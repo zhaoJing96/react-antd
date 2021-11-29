@@ -62,5 +62,10 @@ export default function HomeLink() {
                 <span>videojs视频流</span>
             </Link>
         </Menu.Item>
+        <Menu.Item key="11">
+            <Link to="/home/jessibucaPlayer" replace>
+                <span>jessibuca H5直播流</span>
+            </Link>
+        </Menu.Item>
     </Menu>;
 }
