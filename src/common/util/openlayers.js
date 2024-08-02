@@ -145,3 +145,138 @@ export function dropCircleArea(datas, areaStyle, nameData, zIndex, map) {
     map.addLayer(clayer);
     return clayer;
 }
+// GPS转高德
+let GPS = {
+    PI: 3.14159265358979324,
+    x_pi: 3.14159265358979324 * 3000.0 / 180.0,
+
+    transformLat: function (x, y) {
+        let ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+        ret += (20.0 * Math.sin(6.0 * x * this.PI) + 20.0 * Math.sin(2.0 * x * this.PI)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(y * this.PI) + 40.0 * Math.sin(y / 3.0 * this.PI)) * 2.0 / 3.0;
+        ret += (160.0 * Math.sin(y / 12.0 * this.PI) + 320 * Math.sin(y * this.PI / 30.0)) * 2.0 / 3.0;
+        return ret;
+    },
+    transformLon: function (x, y) {
+        let ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
+        ret += (20.0 * Math.sin(6.0 * x * this.PI) + 20.0 * Math.sin(2.0 * x * this.PI)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(x * this.PI) + 40.0 * Math.sin(x / 3.0 * this.PI)) * 2.0 / 3.0;
+        ret += (150.0 * Math.sin(x / 12.0 * this.PI) + 300.0 * Math.sin(x / 30.0 * this.PI)) * 2.0 / 3.0;
+        return ret;
+    },
+    // 坐标转换
+    delta: function (lat, lon) {
+        let a = 6378245.0; //  a: 卫星椭球坐标投影到平面地图坐标系的投影因子。
+        let ee = 0.00669342162296594323; //  ee: 椭球的偏心率。
+        let dLat = this.transformLat(lon - 105.0, lat - 35.0);
+        let dLon = this.transformLon(lon - 105.0, lat - 35.0);
+        let radLat = lat / 180.0 * this.PI;
+        let magic = Math.sin(radLat);
+        magic = 1 - ee * magic * magic;
+        let sqrtMagic = Math.sqrt(magic);
+        dLat = (dLat * 180.0) / ((a * (1 - ee)) / (magic * sqrtMagic) * this.PI);
+        dLon = (dLon * 180.0) / (a / sqrtMagic * Math.cos(radLat) * this.PI);
+        return { 'lat': dLat, 'lon': dLon };
+    },
+    // 判断是否为国外坐标
+    outOfChina: function (lat, lon) {
+        if (lon < 72.004 || lon > 137.8347) { return true; }
+        if (lat < 0.8293 || lat > 55.8271) { return true; }
+        return false;
+    },
+    // GPS---高德
+    gcj_encrypt: function (wgsLat, wgsLon) {
+        if (this.outOfChina(wgsLat, wgsLon)) { return { 'lat': wgsLat, 'lon': wgsLon }; }
+
+        let d = this.delta(wgsLat, wgsLon);
+        return { 'lat': wgsLat + d.lat, 'lon': wgsLon + d.lon };
+    }
+};
+// 坐标处理-单个点
+let gpsToPointTransform = function (gps) {
+    let result = GPS.gcj_encrypt(gps[1], gps[0]);
+    return [result.lon, result.lat];
+};
+// 坐标处理-多边形
+let gpsToPolygonTransform = function (gps) {
+    let final = [];
+    let len = gps.length;
+    for (let i = 0; i < len; i++) {
+        let result = GPS.gcj_encrypt(gps[i][1], gps[i][0]);
+        final.push([result.lon, result.lat]);
+    }
+    return final;
+};
+// 4326坐标下米转换成地图距离
+let getRadius = (map, radius) => {
+    let metersPerUnit = map.getView().getProjection().getMetersPerUnit();
+    let circleRadius = radius / metersPerUnit;
+    return circleRadius;
+};
+// 高德转GPS
+let GD = {
+    /****** 计算纬度******/
+    CalLat: function (X, Y) {
+        let ResultLat = -100.0 + 2.0 * X + 3.0 * Y + 0.2 * Y * Y + 0.1 * X * Y + 0.2 * Math.sqrt(Math.abs(X));
+        ResultLat += (20.0 * Math.sin(6.0 * X * Math.PI) + 20.0 * Math.sin(2.0 * X * Math.PI)) * 2.0 / 3.0;
+        ResultLat += (20.0 * Math.sin(Y * Math.PI) + 40.0 * Math.sin(Y / 3.0 * Math.PI)) * 2.0 / 3.0;
+        ResultLat += (160.0 * Math.sin(Y / 12.0 * Math.PI) + 320 * Math.sin(Y * Math.PI / 30.0)) * 2.0 / 3.0;
+        return ResultLat;
+    },
+    /******计算经度******/
+    CalLon: function (X, Y) {
+        let ResultLon = 300.0 + X + 2.0 * Y + 0.1 * X * X + 0.1 * X * Y + 0.1 * Math.sqrt(Math.abs(X));
+        ResultLon += (20.0 * Math.sin(6.0 * X * Math.PI) + 20.0 * Math.sin(2.0 * X * Math.PI)) * 2.0 / 3.0;
+        ResultLon += (20.0 * Math.sin(X * Math.PI) + 40.0 * Math.sin(X / 3.0 * Math.PI)) * 2.0 / 3.0;
+        ResultLon += (150.0 * Math.sin(X / 12.0 * Math.PI) + 300.0 * Math.sin(X / 30.0 * Math.PI)) * 2.0 / 3.0;
+        return ResultLon;
+    },
+    /******判断坐标是否在国外******/
+    IsOutOfChina: function (Lon, Lat) {
+        if (Lon < 72.004 || Lon > 137.8347) { return true; }
+        if (Lat < 0.8293 || Lat > 55.8271) { return true; }
+        return false;
+    },
+    /*********计算偏差***************/
+    CalDev: function (WgLon, WgLat) {
+        let ee = 0.00669342162296594323;
+        let a = 6378245.0;
+        if (this.IsOutOfChina(WgLon, WgLat)) { return { Lon: 0, Lat: 0 }; }
+        let Lat = this.CalLat(WgLon - 105.0, WgLat - 35.0);
+        let Lon = this.CalLon(WgLon - 105.0, WgLat - 35.0);
+        let RadLat = WgLat / 180.0 * Math.PI;
+        let Magic = Math.sin(RadLat);
+        Magic = 1 - ee * Magic * Magic;
+        let sqrtMagic = Math.sqrt(Magic);
+        Lat = (Lat * 180.0) / ((a * (1 - ee)) / (Magic * sqrtMagic) * Math.PI);
+        Lon = (Lon * 180.0) / (a / sqrtMagic * Math.cos(RadLat) * Math.PI);
+        return { Lon: Lon, Lat: Lat };
+    },
+    /*********高德转GPS***************/
+    GcjToWgs: function (Longitude, Latitude) {
+        let Dev = this.CalDev(Longitude, Latitude);
+        let RetLat = Latitude - Dev.Lat;
+        let RetLon = Longitude - Dev.Lon;
+        Dev = this.CalDev(RetLon, RetLat);
+        RetLat = Latitude - Dev.Lat;
+        RetLon = Longitude - Dev.Lon;
+        return { Lon: RetLon, Lat: RetLat };
+    }
+};
+// 坐标处理-单个点
+let pointToGpsTransform = function (gd) {
+    let result = GD.GcjToWgs(gd[0], gd[1]);
+    return [result.Lon, result.Lat];
+};
+// 坐标处理-多边形
+let polygonToGpsTransform = function (gd) {
+    let final = [];
+    let len = gd[0].length;
+    for (let i = 0; i < len; i++) {
+        let arr = Proj.transform(gd[0][i], 'EPSG:3857', 'EPSG:4326');
+        let result = GD.GcjToWgs(arr[0], arr[1]);
+        final.push([result.Lon, result.Lat]);
+    }
+    return final;
+};
+export { gpsToPointTransform, gpsToPolygonTransform, getRadius, pointToGpsTransform, polygonToGpsTransform };

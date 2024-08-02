@@ -4,7 +4,7 @@ import { Menu } from 'antd';
 const { SubMenu } = Menu;
 
 export default function HomeLink() {
-    return <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+    return <Menu theme="dark" mode="inline" defaultOpenKeys={['components']} defaultSelectedKeys={['1']}>
         <SubMenu key="components" title={<span>组件相关</span>}>
             <Menu.Item key="1">
                 <Link to="/home/component" replace>
@@ -36,6 +36,11 @@ export default function HomeLink() {
             <Menu.Item key="openlayersCluster">
                 <Link to="/home/openlayerCluster" replace>
                     <span>openlayer cluster 聚合</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="openlayerInteraction">
+                <Link to="/home/openlayerInteraction" replace>
+                    <span>openlayer interaction相关</span>
                 </Link>
             </Menu.Item>
         </SubMenu>

@@ -1,17 +1,23 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import ComponentPage from '../otherFile/componentPage';
-import TableResize from '../otherFile/tableResize';
-import Marquee from '../otherFile/marquee';
-import TableDrag from '../otherFile/tableDrag';
-import AmapPage from '../mapFile/amap';
-import OpenlayerCluster from '../mapFile/openlayerCluster';
-import GltfModelPage from '../3DFile/gltfModel';
-import FlvVideo from '../videoFile/flvVideo';
-import VideoPlayer from '../videoFile/videoPlayer';
-import JessibucaPlayer from '../videoFile/jessibucaPlayer';
-import H5sPlayer from '../videoFile/h5sPlayer'
-import HooksDemo from '../hooksDemo';
+// 组件相关
+import ComponentPage from '@/view/componentFile/componentPage';
+import TableResize from '@/view/componentFile/tableResize';
+import Marquee from '@/view/componentFile/marquee';
+import TableDrag from '@/view/componentFile/tableDrag';
+// 地图相关
+import AmapPage from '@/view/mapFile/amap';
+import OpenlayerCluster from '@/view/mapFile/openlayerCluster';
+import OpenlayerInteraction from '@/view/mapFile/openlayerInteraction';
+// 直播流相关
+import FlvVideo from '@/view/videoFile/flvVideo';
+import VideoPlayer from '@/view/videoFile/videoPlayer';
+import JessibucaPlayer from '@/view/videoFile/jessibucaPlayer';
+import H5sPlayer from '@/view/videoFile/h5sPlayer'
+// three.js相关
+import GltfModelPage from '@/view/3DFile/gltfModel';
+// react相关
+import HooksDemo from '@/view/hooksDemo';
 
 export default function HomeRoute() {
     return <Fragment>
@@ -19,18 +25,24 @@ export default function HomeRoute() {
             {/* 默认页面 */}
             <Route exact path="/" component={ComponentPage}></Route>
             <Route exact path="/home" component={ComponentPage}></Route>
+            {/* 组件相关 */}
             <Route path="/home/component" component={ComponentPage}></Route>
             <Route path="/home/tableResize" component={TableResize}></Route>
             <Route path="/home/marquee" component={Marquee}></Route>
             <Route path="/home/tableDrag" component={TableDrag}></Route>
-            <Route path="/home/openlayerCluster" component={OpenlayerCluster}></Route>
-            <Route path="/home/hooks" component={HooksDemo}></Route>
-            <Route path="/home/gltfModel" component={GltfModelPage}></Route>
+            {/* 地图相关 */}
             <Route path="/home/amap" component={AmapPage}></Route>
+            <Route path="/home/openlayerCluster" component={OpenlayerCluster}></Route>
+            <Route path="/home/openlayerInteraction" component={OpenlayerInteraction}></Route>
+            {/* 直播流相关 */}
             <Route path="/home/flvVideo" component={FlvVideo}></Route>
             <Route path="/home/videoPlayer" component={VideoPlayer}></Route>
             <Route path="/home/jessibucaPlayer" component={JessibucaPlayer}></Route>
             <Route path="/home/h5sPlayer" component={H5sPlayer}></Route>
+            {/* three.js相关 */}
+            <Route path="/home/gltfModel" component={GltfModelPage}></Route>
+            {/* react相关 */}
+            <Route path="/home/hooks" component={HooksDemo}></Route>
         </Switch>
     </Fragment>;
 }
