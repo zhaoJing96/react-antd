@@ -11,6 +11,7 @@ import AmapPage from '../amap';
 import FlvVideo from '../flvVideo';
 import VideoPlayer from '../videoPlayer';
 import JessibucaPlayer from '../jessibucaPlayer';
+import H5sPlayer from '../h5sPlayer'
 
 export default function HomeRoute() {
     return <Fragment>
@@ -29,6 +30,7 @@ export default function HomeRoute() {
             <Route path="/home/flvVideo" component={FlvVideo}></Route>
             <Route path="/home/videoPlayer" component={VideoPlayer}></Route>
             <Route path="/home/jessibucaPlayer" component={JessibucaPlayer}></Route>
+            <Route path="/home/h5sPlayer" component={H5sPlayer}></Route>
         </Switch>
     </Fragment>;
 }
