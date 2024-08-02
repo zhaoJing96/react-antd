@@ -1,17 +1,17 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import ComponentPage from '../componentPage';
-import TableResize from '../tableResize';
-import Marquee from '../marquee';
-import TableDrag from '../tableDrag';
-import OpenlayerCluster from '../openlayerCluster';
+import ComponentPage from '../otherFile/componentPage';
+import TableResize from '../otherFile/tableResize';
+import Marquee from '../otherFile/marquee';
+import TableDrag from '../otherFile/tableDrag';
+import AmapPage from '../mapFile/amap';
+import OpenlayerCluster from '../mapFile/openlayerCluster';
+import GltfModelPage from '../3DFile/gltfModel';
+import FlvVideo from '../videoFile/flvVideo';
+import VideoPlayer from '../videoFile/videoPlayer';
+import JessibucaPlayer from '../videoFile/jessibucaPlayer';
+import H5sPlayer from '../videoFile/h5sPlayer'
 import HooksDemo from '../hooksDemo';
-import GltfModelPage from '../gltfModel';
-import AmapPage from '../amap';
-import FlvVideo from '../flvVideo';
-import VideoPlayer from '../videoPlayer';
-import JessibucaPlayer from '../jessibucaPlayer';
-import H5sPlayer from '../h5sPlayer'
 
 export default function HomeRoute() {
     return <Fragment>

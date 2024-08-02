@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'antd';
 import moment from 'moment';
-import DRangePicker from '../component/rangePicker/index.jsx';
-import DhPagination from '../component/pagination/index.jsx';
+import DRangePicker from '../../component/rangePicker/index.jsx';
+import DhPagination from '../../component/pagination/index.jsx';
 
 const ComponentPage = () => {
     const [date, setDate] = useState(null);

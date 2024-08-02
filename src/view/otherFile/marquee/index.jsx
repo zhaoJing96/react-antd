@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Marquee from '../component/marquee/index.jsx'
+import Marquee from '../../component/marquee/index.jsx'
 
 const MarqueePage = () => {
     const [list, setList] = useState([]);

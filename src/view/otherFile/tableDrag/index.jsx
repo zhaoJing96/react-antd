@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DragTable from '../component/dragTable/index.jsx';
+import DragTable from '../../component/dragTable/index.jsx';
 
 const TableDrag = () => {
     const [dataSource, setDataSource] = useState([]);
