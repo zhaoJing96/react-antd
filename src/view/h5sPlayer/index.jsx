@@ -9,7 +9,7 @@ const H5sPlayer = () => {
     useEffect(() => {
         let videoConf = {
             videoid: 'h5sVideo1',
-            protocol: 'http', // 协议
+            protocol: 'http:', // 协议
             host: '192.168.10.195:18085', //端口
             rootpath: '/',
             hlsver: 'v1',
@@ -22,7 +22,6 @@ const H5sPlayer = () => {
     }, []);
 
     useEffect(() => {
-        console.log(videoBox.current);
         if (player) {
             videoBox.current.play();
             player.connect();
