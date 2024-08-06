@@ -1,3 +1,4 @@
+// openlayers点聚合
 import React, { useState, useEffect } from 'react';
 import { Map, View, Feature } from 'ol';// 地图Collection
 import * as Proj from 'ol/proj'; // 转化

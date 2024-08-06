@@ -43,6 +43,11 @@ export default function HomeLink() {
                     <span>openlayer interaction相关</span>
                 </Link>
             </Menu.Item>
+            <Menu.Item key="openlayerOverlay">
+                <Link to="/home/openlayerOverlay" replace>
+                    <span>openlayer overlay相关</span>
+                </Link>
+            </Menu.Item>
         </SubMenu>
         <SubMenu
             key="8"

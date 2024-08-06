@@ -1,3 +1,4 @@
+// openlayers 地图绘制（Draw）和编辑（Modify）圆心、矩形、多边形
 import React, { useState, useEffect } from 'react';
 import { Map, View, Collection } from 'ol'; // 地图Collection
 import * as Proj from 'ol/proj'; // 转化

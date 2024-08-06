@@ -9,6 +9,7 @@ import TableDrag from '@/view/componentFile/tableDrag';
 import AmapPage from '@/view/mapFile/amap';
 import OpenlayerCluster from '@/view/mapFile/openlayerCluster';
 import OpenlayerInteraction from '@/view/mapFile/openlayerInteraction';
+import OpenlayerOverlay from '@/view/mapFile/openlayerOverlay';
 // 直播流相关
 import FlvVideo from '@/view/videoFile/flvVideo';
 import VideoPlayer from '@/view/videoFile/videoPlayer';
@@ -34,6 +35,7 @@ export default function HomeRoute() {
             <Route path="/home/amap" component={AmapPage}></Route>
             <Route path="/home/openlayerCluster" component={OpenlayerCluster}></Route>
             <Route path="/home/openlayerInteraction" component={OpenlayerInteraction}></Route>
+            <Route path="/home/openlayerOverlay" component={OpenlayerOverlay}></Route>
             {/* 直播流相关 */}
             <Route path="/home/flvVideo" component={FlvVideo}></Route>
             <Route path="/home/videoPlayer" component={VideoPlayer}></Route>
