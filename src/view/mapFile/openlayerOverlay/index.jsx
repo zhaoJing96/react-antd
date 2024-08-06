@@ -153,7 +153,6 @@ const OpenlayerOverlay = () => {
                 style: false, // 被选中后的样式  如果不写style，将为默认样式（不是自己设置的样式，而是opelayers自带的样式）,设置为false或者null将保持自己设置的样式
                 // 指定图层
                 filter: (feature, layer) => {
-                    console.log(layer);
                     return layer;
                 }
             });
@@ -166,7 +165,7 @@ const OpenlayerOverlay = () => {
                     // 设置当前数据
                     setCurInfo(clickPointInfo);
                     // 设置弹出窗的位置为当前数据定位位置
-                    overlay.setPosition(clickPointInfo.position);
+                    overlay.setPosition(Proj.fromLonLat(clickPointInfo.position));
                 } else {
                     setCurInfo(null);
                     overlay.setPosition(undefined);
