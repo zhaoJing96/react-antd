@@ -17,6 +17,7 @@ import JessibucaPlayer from '@/view/videoFile/jessibucaPlayer';
 import H5sPlayer from '@/view/videoFile/h5sPlayer'
 // three.js相关
 import GltfModelPage from '@/view/3DFile/gltfModel';
+import Draw3DHollowCylinder from '@/view/3DFile/draw3DHollowCylinder'
 // react相关
 import HooksDemo from '@/view/hooksDemo';
 
@@ -43,6 +44,7 @@ export default function HomeRoute() {
             <Route path="/home/h5sPlayer" component={H5sPlayer}></Route>
             {/* three.js相关 */}
             <Route path="/home/gltfModel" component={GltfModelPage}></Route>
+            <Route path="/home/draw3DHollowCylinder" component={Draw3DHollowCylinder}></Route>
             {/* react相关 */}
             <Route path="/home/hooks" component={HooksDemo}></Route>
         </Switch>

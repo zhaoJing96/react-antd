@@ -79,6 +79,11 @@ export default function HomeLink() {
                     <span>three.js加载3D模型</span>
                 </Link>
             </Menu.Item>
+            <Menu.Item key="draw3DHollowCylinder">
+                <Link to="/home/draw3DHollowCylinder" replace>
+                    <span>three.js绘制圆心围栏</span>
+                </Link>
+            </Menu.Item>
         </SubMenu>
         <SubMenu
             key="react"
