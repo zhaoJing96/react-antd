@@ -12,7 +12,7 @@ const Draw3DHollowCylinder = () => {
     function renderFn() {
         requestAnimationFrame(renderFn);
         // 用相机渲染一个场景
-        renderer.render(scene, camera);
+        renderer && renderer.render(scene, camera);
     }
     /**
      * 绘制墙体
@@ -51,60 +51,59 @@ const Draw3DHollowCylinder = () => {
         // 将墙体添加到组中
         group.add(mesh);
     }
-    useEffect(() => {
-        if (scene) {
-            const points = [
-                [5, 0, 2],
-                [8, 0, 2],
-                [7, 0, 3],
-                [6, 0, 3],
-                [5, 0, 2]
-            ];
-            const pointArr = [];
-            for (let i = 0; i < points.length; i++) {
-                const item = points[i];
-                pointArr.push(new THREE.Vector3(item[0], item[1], item[2]));
-            }
-
-            // 点绘制成线，再到二维平面
-            const shape = new THREE.Shape();
-            shape.moveTo(pointArr[0].x, pointArr[0].z);
-            for (let i = 1; i < pointArr.length; i++) {
-                shape.lineTo(pointArr[i].x, pointArr[i].z);
-            }
-            shape.autoClose = true; // 设置路径自动关闭
-
-            // 从一个或多个路径形状中创建一个多边形几何体。
-            const shapeGeometry = new THREE.ShapeGeometry(shape, 25);
-            const shapeMaterial = new THREE.MeshBasicMaterial({
-                color: 0xFF0018,
-                side: THREE.DoubleSide,
-                transparent: true,
-                opacity: 0.5
-            });
-            const shapeMesh = new THREE.Mesh(shapeGeometry, shapeMaterial);
-            shapeMesh.rotateX(Math.PI / 2);
-
-            const group = new THREE.Group();
-
-            // 墙体数据处理
-            const wallArr = [...pointArr];
-            for (let i = 0; i < wallArr.length; i++) {
-                if (i !== wallArr.length - 1) {
-                    let params = {
-                        startX: wallArr[i].x,
-                        endX: wallArr[i + 1].x,
-                        startZ: wallArr[i].z,
-                        endZ: wallArr[i + 1].z
-                    };
-                    // 绘制墙体
-                    drawPloygonWall(params, points[0][1], group);
-                }
-            }
-            group.add(shapeMesh);
-            scene.add(group);
+    // 绘制多边形
+    function draw() {
+        const points = [
+            [5, 0, 2],
+            [8, 0, 2],
+            [7, 0, 3],
+            [6, 0, 3],
+            [5, 0, 2]
+        ];
+        const pointArr = [];
+        for (let i = 0; i < points.length; i++) {
+            const item = points[i];
+            pointArr.push(new THREE.Vector3(item[0], item[1], item[2]));
         }
-    }, [scene]);
+
+        // 点绘制成线，再到二维平面
+        const shape = new THREE.Shape();
+        shape.moveTo(pointArr[0].x, pointArr[0].z);
+        for (let i = 1; i < pointArr.length; i++) {
+            shape.lineTo(pointArr[i].x, pointArr[i].z);
+        }
+        shape.autoClose = true; // 设置路径自动关闭
+
+        // 从一个或多个路径形状中创建一个多边形几何体。
+        const shapeGeometry = new THREE.ShapeGeometry(shape, 25);
+        const shapeMaterial = new THREE.MeshBasicMaterial({
+            color: 0xFF0018,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.5
+        });
+        const shapeMesh = new THREE.Mesh(shapeGeometry, shapeMaterial);
+        shapeMesh.rotateX(Math.PI / 2);
+
+        const group = new THREE.Group();
+
+        // 墙体数据处理
+        const wallArr = [...pointArr];
+        for (let i = 0; i < wallArr.length; i++) {
+            if (i !== wallArr.length - 1) {
+                let params = {
+                    startX: wallArr[i].x,
+                    endX: wallArr[i + 1].x,
+                    startZ: wallArr[i].z,
+                    endZ: wallArr[i + 1].z
+                };
+                // 绘制墙体
+                drawPloygonWall(params, points[0][1], group);
+            }
+        }
+        group.add(shapeMesh);
+        scene.add(group);
+    }
     // 初始化环境、灯光、相机、渲染器
     useEffect(() => {
         scene = new THREE.Scene();
@@ -116,6 +115,8 @@ const Draw3DHollowCylinder = () => {
         scene.add(sunlight);
         const axisHelper = new THREE.AxesHelper();
         scene.add(axisHelper);//坐标辅助线加入到场景中
+        // 绘制多边形电子围栏
+        scene && draw();
 
         // 获取宽高设置相机和渲染区域大小
         const width = box.current.offsetWidth;
@@ -144,6 +145,15 @@ const Draw3DHollowCylinder = () => {
         // 渲染
         renderFn();
     }, []);
+    useEffect(() => {
+        return () => {
+            // 离开界面清除数据
+            scene = null;
+            camera = null;
+            renderer = null;
+            controls = null;
+        };
+    });
 
     return <div className='ui_container_box'>
         three.js绘制3D多边形区域。

@@ -103,7 +103,7 @@ export default function GltfModelPage() {
             composer.render(delta);
         } else {
             // 用相机渲染一个场景
-            renderer.render(scene, camera);
+            renderer && renderer.render(scene, camera);
         }
     }
     // 指定模型子集改变颜色
@@ -275,6 +275,17 @@ export default function GltfModelPage() {
         setComposer(width, height);
         // 渲染
         renderFn();
+    }, []);
+    useEffect(() => {
+        return () => {
+            // 清除数据
+            scene = null;
+            camera = null;
+            renderer = null;
+            controls = null;
+            composer = null;
+            isComposer = false;
+        }
     }, []);
 
     return <div className='ui_container_box'>
