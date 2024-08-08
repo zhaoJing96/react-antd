@@ -5,8 +5,10 @@ import * as Proj from 'ol/proj'; // 转化
 import { Vector as VectorSource, Cluster } from 'ol/source'; // 资源
 import VectorLayer from 'ol/layer/Vector'; // 图层
 import { Point } from 'ol/geom';
-import { Style, Circle, Stroke, Fill, Text } from 'ol/style'; // 样式
+import { Style, Icon, Fill, Text } from 'ol/style'; // 样式
 import { amapFn } from '@/common/util/openlayers.js';
+const clusterImg = require('@/static/image/helmetMore.png');
+const pointImg = require('@/static/image/helmet_blue@2x.png');
 
 const OpenlayerMap = () => {
     const [map, setMap] = useState(null); // 地图
@@ -14,26 +16,54 @@ const OpenlayerMap = () => {
 
     // 集群点样式，聚合后样式
     function setClusterStyle(feature) {
-        let features = feature.get('features'); // feature.get('features')这一步得到的是feature所在的集群的feature数组
-        let size = features.length;
-        let style = new Style({
-            image: new Circle({
-                radius: 18,
-                stroke: new Stroke({
-                    color: 'red'
+        // feature.get('features')这一步得到的是feature所在的集群的feature数组
+        const features = feature.get('features');
+        const name = feature.values_.features[0].values_.name; // 获取feature名称
+        const size = features.length;
+        let style;
+        if (size > 1) {
+            // 聚合样式
+            style = new Style({
+                image: new Icon({
+                    scale: 0.5,
+                    src: clusterImg,
+                    anchor: [0.5, 1]
                 }),
-                fill: new Fill({
-                    color: 'red'
+                text: new Text({
+                    text: size.toString(), // 数字需要toString()转换
+                    fill: new Fill({
+                        color: '#FFFFFF'
+                    }),
+                    backgroundFill: new Fill({
+                        color: '#555555'
+                    }),
+                    padding: [2, 2, 0, 4],
+                    offsetY: -48,
+                    scale: 1.4
                 })
-            }),
-            text: new Text({
-                font: '15px sans-serif',
-                text: size.toString(), // 数字需要toString()转换
-                fill: new Fill({
-                    color: '#fff'
+            });
+        } else {
+            // 单点样式
+            style = new Style({
+                image: new Icon({
+                    scale: 0.5,
+                    src: pointImg,
+                    anchor: [0.5, 1]
+                }),
+                text: new Text({
+                    text: name, // 数字需要toString()转换
+                    fill: new Fill({
+                        color: '#FFFFFF'
+                    }),
+                    backgroundFill: new Fill({
+                        color: '#555555'
+                    }),
+                    padding: [2, 2, 0, 4],
+                    offsetY: -48,
+                    scale: 1.4
                 })
-            })
-        });
+            });
+        }
         return style;
     }
 
@@ -41,18 +71,31 @@ const OpenlayerMap = () => {
         if (map) {
             // 散列点坐标
             let pointArr = [
-                [104.1005229950, 30.6743128087],
-                [103.9271879196, 30.7462617980],
-                [103.6227035522, 30.9932085864],
-                [103.5752069950, 31.4663367378],
-                [103.4307861328, 30.1941019446],
-                [106.5885615349, 29.5679608922],
-                [106.4500522614, 29.5811456252],
-                [107.7666950226, 29.4161988273],
-                [118.1862562895, 24.4891501310],
-                [118.1982564926, 24.4947641146],
-                [79.1592185000, 12.9721456000],
-                [80.2164941000, 12.9914031000],
+                {
+                    name: '张三',
+                    position: [104.1005229950, 30.6743128087],
+                }, {
+                    name: '李四',
+                    position: [103.9271879196, 30.7462617980],
+                }, {
+                    name: '王五',
+                    position: [103.6227035522, 30.9932085864],
+                }, {
+                    name: '赵六',
+                    position: [103.5752069950, 31.4663367378],
+                }, {
+                    name: '安娜',
+                    position: [103.4307861328, 30.1941019446],
+                }, {
+                    name: '麻子',
+                    position: [106.5885615349, 29.5679608922],
+                }, {
+                    name: '嘎子',
+                    position: [106.4500522614, 29.5811456252],
+                }, {
+                    name: '翠花',
+                    position: [107.7666950226, 29.4161988273],
+                }
             ]
             // 散列点资源vector
             let source = new VectorSource();
@@ -60,9 +103,9 @@ const OpenlayerMap = () => {
             for (let i = 0; i < pointArr.length; i++) {
                 const item = pointArr[i];
                 let feature = new Feature({
-                    geometry: new Point(
-                        new Proj.transform(item, 'EPSG:4326', 'EPSG:3857')
-                    )
+                    geometry: new Point(new Proj.fromLonLat(item.position)),
+                    name: item.name,
+                    type: 'point'
                 });
                 // 将散列点feature添加到散列点资源source中
                 source.addFeature(feature);
@@ -72,7 +115,7 @@ const OpenlayerMap = () => {
                 distance: 50,
                 source: source
             });
-            
+
             // 集群点图层
             let clusters = new VectorLayer({
                 source: clusterSource,
@@ -101,8 +144,9 @@ const OpenlayerMap = () => {
     useEffect(() => {
         // View用于创建2D视图
         const viewObj = new View({
+            // 设定中心点，因为默认坐标系为 3587，所以要将我们常用的经纬度坐标系4326 转换为 3587坐标系
             center: Proj.transform([103.9271879196, 30.7462617980], 'EPSG:4326', 'EPSG:3857'),
-            zoom: 5
+            zoom: 7
         });
         setView(viewObj);
     }, []);
