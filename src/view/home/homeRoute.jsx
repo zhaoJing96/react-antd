@@ -18,6 +18,7 @@ import H5sPlayer from '@/view/videoFile/h5sPlayer'
 // three.js相关
 import GltfModelPage from '@/view/3DFile/gltfModel';
 import Draw3DHollowCylinder from '@/view/3DFile/draw3DHollowCylinder'
+import Draw3DPloygonShape from '@/view/3DFile/draw3DPloygonShape'
 // react相关
 import HooksDemo from '@/view/hooksDemo';
 
@@ -45,6 +46,7 @@ export default function HomeRoute() {
             {/* three.js相关 */}
             <Route path="/home/gltfModel" component={GltfModelPage}></Route>
             <Route path="/home/draw3DHollowCylinder" component={Draw3DHollowCylinder}></Route>
+            <Route path="/home/draw3DPloygonShape" component={Draw3DPloygonShape}></Route>
             {/* react相关 */}
             <Route path="/home/hooks" component={HooksDemo}></Route>
         </Switch>
