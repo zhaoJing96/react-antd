@@ -8,12 +8,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
-import * as TWEEN from '@tweenjs/tween.js'
+import * as TWEEN from '@tweenjs/tween.js';
+import { Group } from '@tweenjs/tween.js';
 import { getCanvasIntersects } from '@/common/three/index.js'; // three自定义公共方法
 const modelUrl = require('@/static/image/ZN_Mao.glb');
 // const modelUrl = require('@/static/image/JC6BD.glb');
 
-let renderer, controls, scene, camera, composer, outlinePass;
+let renderer, controls, scene, camera, composer, outlinePass, group;
 let isComposer = false; // 是否组合渲染，现实选中高光效果
 let delta = new THREE.Clock().getDelta();//getDelta()方法获得两帧的时间间隔
 
@@ -97,7 +98,7 @@ export default function GltfModelPage() {
         requestAnimationFrame(renderFn);
         //控制器
         // controls.update(delta);
-        TWEEN.update(); // 补间动画执行
+        group && group.update(); // 补间动画执行
         if (isComposer) {
             // 组合渲染器，渲染高亮
             composer.render(delta);
@@ -148,32 +149,46 @@ export default function GltfModelPage() {
             target.geometry.dispose();
             target.material.dispose();
         }
-        new TWEEN.Tween(target.position)
+        const tween = new TWEEN.Tween(target.position)
             .to({
                 x: posi && posi.x ? posi.x : target.userData.posiX,
                 y: posi && posi.y ? posi.y : target.userData.posiY,
                 z: posi && posi.z ? posi.z : target.userData.posiZ,
             }, 1000).delay(0).easing(TWEEN.Easing.Sinusoidal.InOut)//InOut表示前半段加速，后半段减速   Linear.None表示匀速
             .start();
+        return tween;
     }
     // 分解模型
     function resolvemodel() {
+        console.log(111111);
         if (modelData) {
+            group = new Group();
             resolveAnimation("EJ1", { x: 0.1 });
             resolveAnimation("EJ2", { x: -0.1 });
             resolveAnimation("DCC", { z: -0.1 });
             resolveAnimation("GY", { z: 0.1 });
             resolveAnimation("MK", { y: 0.1 });
+            group.add(resolveAnimation("EJ1", { x: 0.1 }));
+            group.add(resolveAnimation("EJ2", { x: -0.1 }));
+            group.add(resolveAnimation("DCC", { z: -0.1 }));
+            group.add(resolveAnimation("GY", { z: 0.1 }));
+            group.add(resolveAnimation("MK", { y: 0.1 }));
         }
     }
     // 合并模型
     function resetModel() {
         if (modelData) {
+            group = new Group();
             resolveAnimation("EJ1");
             resolveAnimation("EJ2");
             resolveAnimation("DCC");
             resolveAnimation("GY");
             resolveAnimation("MK");
+            group.add(resolveAnimation("EJ1"));
+            group.add(resolveAnimation("EJ2"));
+            group.add(resolveAnimation("DCC"));
+            group.add(resolveAnimation("GY"));
+            group.add(resolveAnimation("MK"));
         }
     }
     // 重置颜色
