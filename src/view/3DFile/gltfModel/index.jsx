@@ -8,7 +8,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
-// import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import * as TWEEN from '@tweenjs/tween.js'
 import { getCanvasIntersects } from '@/common/three/index.js'; // three自定义公共方法
 const modelUrl = require('@/static/image/ZN_Mao.glb');
