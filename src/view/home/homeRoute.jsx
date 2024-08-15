@@ -16,9 +16,10 @@ import VideoPlayer from '@/view/videoFile/videoPlayer';
 import JessibucaPlayer from '@/view/videoFile/jessibucaPlayer';
 import H5sPlayer from '@/view/videoFile/h5sPlayer'
 // three.js相关
-import GltfModelPage from '@/view/3DFile/gltfModel';
+import InitModelPage from '@/view/3DFile/initModel';
 import Draw3DHollowCylinder from '@/view/3DFile/draw3DHollowCylinder'
 import Draw3DPloygonShape from '@/view/3DFile/draw3DPloygonShape'
+import ModelInteractive from '@/view/3DFile/modelInteractive'
 // react相关
 import HooksDemo from '@/view/hooksDemo';
 
@@ -44,9 +45,10 @@ export default function HomeRoute() {
             <Route path="/home/jessibucaPlayer" component={JessibucaPlayer}></Route>
             <Route path="/home/h5sPlayer" component={H5sPlayer}></Route>
             {/* three.js相关 */}
-            <Route path="/home/gltfModel" component={GltfModelPage}></Route>
             <Route path="/home/draw3DHollowCylinder" component={Draw3DHollowCylinder}></Route>
             <Route path="/home/draw3DPloygonShape" component={Draw3DPloygonShape}></Route>
+            <Route path="/home/initModel" component={InitModelPage}></Route>
+            <Route path="/home/modelInteractive" component={ModelInteractive}></Route>
             {/* react相关 */}
             <Route path="/home/hooks" component={HooksDemo}></Route>
         </Switch>

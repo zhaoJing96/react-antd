@@ -73,20 +73,25 @@ export default function HomeLink() {
                 </Link>
             </Menu.Item>
         </SubMenu>
-        <SubMenu key="3D" title={<span>3D模型相关</span>}>
+        <SubMenu key="3D" title={<span>three.js模型相关</span>}>
             <Menu.Item key="gltfOne">
-                <Link to="/home/gltfModel" replace>
-                    <span>three.js加载3D模型</span>
+                <Link to="/home/initModel" replace>
+                    <span>加载3D模型</span>
                 </Link>
             </Menu.Item>
             <Menu.Item key="draw3DHollowCylinder">
                 <Link to="/home/draw3DHollowCylinder" replace>
-                    <span>three.js绘制圆形围栏</span>
+                    <span>绘制圆形围栏</span>
                 </Link>
             </Menu.Item>
             <Menu.Item key="draw3DPloygonShape">
                 <Link to="/home/draw3DPloygonShape" replace>
-                    <span>three.js绘制多边形围栏</span>
+                    <span>绘制多边形围栏</span>
+                </Link>
+            </Menu.Item>
+            <Menu.Item key="modelInteractive">
+                <Link to="/home/modelInteractive" replace>
+                    <span>模型爆炸效果等操作</span>
                 </Link>
             </Menu.Item>
         </SubMenu>

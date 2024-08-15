@@ -12,7 +12,6 @@ import * as TWEEN from '@tweenjs/tween.js';
 import { Group } from '@tweenjs/tween.js';
 import { getCanvasIntersects } from '@/common/three/index.js'; // three自定义公共方法
 const modelUrl = require('@/static/image/ZN_Mao.glb');
-// const modelUrl = require('@/static/image/JC6BD.glb');
 
 let renderer, controls, scene, camera, composer, outlinePass, group;
 let isComposer = false; // 是否组合渲染，现实选中高光效果
@@ -25,8 +24,8 @@ export default function GltfModelPage() {
     // 设置灯光
     function setLight() {
         //- 添加平行光光源
-        let lightTop = new THREE.DirectionalLight(0xffffff, 0.1);
-        let lightBottom = new THREE.DirectionalLight(0xffffff, 0.1);
+        let lightTop = new THREE.DirectionalLight(0xffffff, 0.3);
+        let lightBottom = new THREE.DirectionalLight(0xffffff, 0.3);
         let lightLeft = new THREE.DirectionalLight(0xffffff, 0.6);
         let lightRight = new THREE.DirectionalLight(0xffffff, 0.6);
         let lightBefore = new THREE.DirectionalLight(0xffffff, 0.6);
@@ -160,7 +159,6 @@ export default function GltfModelPage() {
     }
     // 分解模型
     function resolvemodel() {
-        console.log(111111);
         if (modelData) {
             group = new Group();
             resolveAnimation("EJ1", { x: 0.1 });
@@ -227,10 +225,7 @@ export default function GltfModelPage() {
     function onWindowResize() {
         let width = box.current.offsetWidth;
         let height = box.current.offsetHeight;
-        camera.left = width / - 2;
-        camera.right = width / 2;
-        camera.top = height / 2;
-        camera.bottom = height / -2;
+        camera.aspect = width / height;
         // 更新相机投影矩阵，在相机任何参数被改变以后必须被调用
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
