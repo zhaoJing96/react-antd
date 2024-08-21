@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import AMap from '@/common/map';
 const url = 'https://a.amap.com/jsapi_demos/static/gltf-online/shanghai/scene.gltf';
-// const url = require('../../static/image/SJKGDPr.gltf');
+// const url = require('../../static/file/SJKGDPr.gltf');
 
 const AmapPage = () => {
     const [map, setMap] = useState(null);

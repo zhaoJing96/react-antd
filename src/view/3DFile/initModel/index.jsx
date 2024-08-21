@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getCanvasIntersects } from '@/common/three/index.js'; // three自定义公共方法
-const modelUrl = require('@/static/image/RobotExpressive.glb');
+const modelUrl = require('@/static/file/RobotExpressive.glb');
 
 let scene, camera, renderer, controls;
 

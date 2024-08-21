@@ -11,7 +11,7 @@ import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass';
 import * as TWEEN from '@tweenjs/tween.js';
 import { Group } from '@tweenjs/tween.js';
 import { getCanvasIntersects } from '@/common/three/index.js'; // three自定义公共方法
-const modelUrl = require('@/static/image/ZN_Mao.glb');
+const modelUrl = require('@/static/file/ZN_Mao.glb');
 
 let renderer, controls, scene, camera, composer, outlinePass, group;
 let isComposer = false; // 是否组合渲染，现实选中高光效果

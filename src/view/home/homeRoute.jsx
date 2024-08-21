@@ -20,6 +20,7 @@ import InitModelPage from '@/view/3DFile/initModel';
 import Draw3DHollowCylinder from '@/view/3DFile/draw3DHollowCylinder'
 import Draw3DPloygonShape from '@/view/3DFile/draw3DPloygonShape'
 import ModelInteractive from '@/view/3DFile/modelInteractive'
+import Css2DOr3DRenderer from '@/view/3DFile/css2DOr3DRenderer'
 // react相关
 import HooksDemo from '@/view/hooksDemo';
 
@@ -49,6 +50,7 @@ export default function HomeRoute() {
             <Route path="/home/draw3DPloygonShape" component={Draw3DPloygonShape}></Route>
             <Route path="/home/initModel" component={InitModelPage}></Route>
             <Route path="/home/modelInteractive" component={ModelInteractive}></Route>
+            <Route path="/home/css2DOr3DRenderer" component={Css2DOr3DRenderer}></Route>
             {/* react相关 */}
             <Route path="/home/hooks" component={HooksDemo}></Route>
         </Switch>

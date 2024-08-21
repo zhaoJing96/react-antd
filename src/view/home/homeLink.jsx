@@ -94,6 +94,11 @@ export default function HomeLink() {
                     <span>模型爆炸效果等操作</span>
                 </Link>
             </Menu.Item>
+            <Menu.Item key="css2DOr3DRenderer">
+                <Link to="/home/css2DOr3DRenderer" replace>
+                    <span>场景标注标签信息</span>
+                </Link>
+            </Menu.Item>
         </SubMenu>
         <SubMenu
             key="react"
