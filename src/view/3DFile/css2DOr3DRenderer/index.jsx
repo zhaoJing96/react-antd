@@ -102,7 +102,7 @@ export default function Css2DOr3DRenderer() {
     // 渲染动画
     function renderFn() {
         requestAnimationFrame(renderFn);
-        controls.update();
+        controls && controls.update();
         // 用相机渲染一个场景
         renderer && renderer.render(scene, camera);
         // css2Renderer && css2Renderer.render(scene, camera);
